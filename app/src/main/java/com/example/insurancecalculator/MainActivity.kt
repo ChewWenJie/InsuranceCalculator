@@ -18,8 +18,10 @@ class MainActivity : AppCompatActivity() {
         myData = ViewModelProviders.of(this).get(PremiumModel::class.java)
 
         display()
+
         buttonCalculate.setOnClickListener(){
             price.text= "RM %.2f".format(getPremium())
+            myData.premiumAmount = getPremium()
             display()
         }
 
@@ -82,13 +84,13 @@ class MainActivity : AppCompatActivity() {
             myData.premiumAmount = 0.0
         }
     }
-    fun display(){
+    private fun display(){
         if(myData.premiumAmount != 0.0)
-            price.text = myData.premiumAmount.toString()
+            price.text = "RM " + myData.premiumAmount.toString()
     }
 
 
-    fun getPremium() : Double{
+    private fun getPremium() : Double{
         return when(spinnerAge.selectedItemPosition){
             0 -> 60.00
             1 -> 70.00 +
@@ -107,6 +109,7 @@ class MainActivity : AppCompatActivity() {
                     (if(radioButtonMale.isChecked) 200.00 else 0.0) +
                     (if(checkBoxSmoker.isChecked) 300.00 else 0.0)
         }
+        display()
     }
 
 
